@@ -1,0 +1,71 @@
+﻿@page "/"
+
+@code{        
+
+    protected override void OnInitialized()
+    {
+        appState.UserName = AppState.UserName;
+
+        foreach (var pair in AppState.Rooms)
+        {
+            appState.Rooms.Add(pair.Key, pair.Value);
+        }
+    }
+
+    private void FormSubmit()
+    {
+        AppState.UserName = appState.UserName;
+        appState.Rooms = new Dictionary<string, int>();
+
+        string[] splitArray = appState.RoomsComaSeparated.Split(",");
+
+        foreach (string S in splitArray)
+        {
+            AppState.Rooms.Add(S, 0);
+        }
+
+        Console.WriteLine("Joining rooms .... " + string.Join(',', AppState.Rooms));
+
+        AppState.RoomsComaSeparated = appState.RoomsComaSeparated;
+
+        formText = "Form Submitted succesfully";
+
+        AppState.AppStateUpdated?.Invoke();
+
+    }
+
+
+    AppState appState = new AppState();
+    public string formText = "";
+}
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<EditForm Model="@AppState" OnSubmit="FormSubmit">
+
+    <div class="container bg-secondary">
+
+        <div class="col-auto">
+            <label> Ussername </label>
+            <InputText @bind-Value="@appState.UserName" />
+        </div>
+        <br />
+        <div class="col-auto">
+            <label> Rooms </label>
+            <InputText @bind-Value="@appState.RoomsComaSeparated" />
+        </div>
+
+        <div class="col-auto">
+            <button  class="btn btn-primary" type="submit"> Submit Form</button>
+
+            <p> @formText</p>
+        </div>
+        </div>
+
+
+</EditForm>
+
+
+<SurveyPrompt Title="How is Blazor working for you?" />
