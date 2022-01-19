@@ -39,33 +39,61 @@
     public string formText = "";
 }
 
-<h1>Hello, world!</h1>
+<div class="container bg-dark text-white ">
 
-Welcome to your new app.
+    <h1 class="text-center text-uppercase display-1 ">Registration</h1>
+    <br />
 
-<EditForm Model="@AppState" OnSubmit="FormSubmit">
+    <p class="text-center font-italic text-uppercase">Enter a username and room you'd like to join'</p>
+    <br />
 
-    <div class="container bg-secondary">
+        <EditForm Model="@AppState" OnSubmit="FormSubmit">
 
-        <div class="col-auto">
-            <label> Ussername </label>
-            <InputText @bind-Value="@appState.UserName" />
+        <div class="row justify-content-md-center">
+
+            <div class="col col-lg-6 ">
+                <p class="text-center"> Name </p>
+                <input type="text" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1" required>
+            </div>
+
+            <div class="col col-lg-6 ">
+                <p class="text-center"> Surname </p>
+                <input type="text" class="form-control" placeholder="Surname" aria-label="Surname" aria-describedby="basic-addon1">
+            </div>
         </div>
+
+
+
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <label class="text-center"> Username </label>
+
+                @*@<InputText @bind-Value="@appState.UserName" />*@
+                <input type="text" @bind="@appState.UserName" class="form-control"  placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+            </div>
+        </div>
+
         <br />
-        <div class="col-auto">
-            <label> Rooms </label>
-            <InputText @bind-Value="@appState.RoomsComaSeparated" />
+
+
+        <div class="row justify-content-md-center ">
+            <div class="col-md-auto">
+                <label class="text-center"> Rooms </label>
+                @*<InputText @bind-Value="@appState.RoomsComaSeparated" />*@
+                <input type="text" @bind="@appState.RoomsComaSeparated" class="form-control" id="validationTextarea" placeholder="room1" aria-label="room" aria-describedby="basic-addon1" required>
+            </div>
         </div>
 
-        <div class="col-auto">
-            <button  class="btn btn-primary" type="submit"> Submit Form</button>
+        <br />
 
-            <p> @formText</p>
+        <div class="row justify-content-md-center">
+
+            <div class="col-md-auto ">
+                <button class="btn btn-danger " type="submit"> Submit Form</button>
+
+                <p> @formText</p>
+            </div>
         </div>
-        </div>
+        </EditForm>
 
-
-</EditForm>
-
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+</div>

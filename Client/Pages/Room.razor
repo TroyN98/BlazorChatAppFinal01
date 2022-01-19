@@ -14,28 +14,45 @@
 
     <p>@AppState.UserName  </p>
 
-    <div class="container bg-primary">
+    <div class="container bg-dark text-white ">
+
         <div class="form-group">
+            <div class="d-flex">
+                <ul id="messagesList">
+                    @foreach (var message in messages)
+                    {
 
-            <ul id="messagesList">
-                @foreach (var message in messages)
-                {
-                    <li>@message</li>
-                }
-            </ul>
+                        if (message == @copyMessage)
+                        {
+                            <li class="ml-auto p-2">@message</li>
+                        }
+                        else
+                        {
+                            <li>@message</li>
+                        }
+
+                    }
+                </ul>
+            </div>
 
         </div>
 
     </div>
-    <div class="container bg-secondary">
-        <div class="col-auto">
-            <label>
-                Message:
-                <input @bind="messageInput" size="50" />
-            </label>
+    
+
+    <div class="row justify-content-md-center">
+
+        <div class="col col-lg-9 ">
+            <div class="input-group">
+                @*<label>
+                    Message:
+                    <input @bind="messageInput" size="50" />*@
+                <textarea placeholder="Username"  @bind="messageInput" class="form-control" aria-label="With textarea"></textarea>
+                @* </label>*@
+            </div>
         </div>
         <div class="col-auto">
-            <button class="btn btn-primary" @onclick="Send" disabled="@(HubConnection.State != HubConnectionState.Connected)">Send</button>
+            <button class="btn btn-danger input-group" @onclick="Send" disabled="@(HubConnection.State != HubConnectionState.Connected)">Send</button>
 
         </div>
     </div>
@@ -45,7 +62,8 @@
 
 
 
-</body>
+
+            </body>
 </html>
 
 
@@ -59,17 +77,23 @@
     private List<string> messages = new List<string>();
     //private string userInput;
     private string messageInput;
+    public string copyMessage;
 
     protected override async Task OnParametersSetAsync()
     {
+
+
         if (RoomName == previousRoomName)
         {
+            
             return;
         }
         else
         {
+
+
             messages.Clear();
-            // userInput = "";
+
             messageInput = "";
 
             if (AppState.Rooms.ContainsKey(RoomName))
@@ -101,6 +125,7 @@
 
     Task Send() =>
     HubConnection.SendAsync("SendMessage", AppState.UserName, messageInput, RoomName);
+
 
 
 }
